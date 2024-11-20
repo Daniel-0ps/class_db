@@ -1,17 +1,20 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11
-TARGET = main
+CFLAGS = -Wall -Wextra -g -Iinclude
+OBJ = btree.o table.o main.o
 
-SRCS = $(wildcard src/*.c)
-OBJS = $(SRCS:.c=.o)
+all: main
 
-all: $(TARGET)
+main: $(OBJ)
+	$(CC) $(CFLAGS) -o main $(OBJ)
 
-$(TARGET): $(OBJS)
-    $(CC) $(CFLAGS) -o $@ $(OBJS)
+btree.o: btree.c btree.h
+	$(CC) $(CFLAGS) -c btree.c
 
-%.o: %.c
-    $(CC) $(CFLAGS) -c $< -o $@
+table.o: table.c table.h btree.h
+	$(CC) $(CFLAGS) -c table.c
+
+main.o: main.c table.h btree.h
+	$(CC) $(CFLAGS) -c main.c
 
 clean:
-    rm -f $(OBJS) $(TARGET)
+	rm -f *.o main
