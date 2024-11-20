@@ -16,5 +16,8 @@ table.o: table.c table.h btree.h
 main.o: main.c table.h btree.h
 	$(CC) $(CFLAGS) -c main.c
 
+persitence.o : persistance.c persitence.h persistance.h
+	$(CC) $(CFLAGS) -c persistance.c
+
 clean:
 	rm -f *.o main
